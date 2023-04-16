@@ -27,9 +27,9 @@ class Order(models.Model):  # Order = ride request
 
     # 2. driver & sharer join (opt. when created) -- only 2 NULL=TRUE
     driverID = models.ForeignKey(
-        'Driver', blank=True, on_delete=models.PROTECT, null=True)
+        'Driver', blank=True, on_delete=models.SET_NULL, null=True)
     sharerID = models.ForeignKey(
-        User, blank=True, on_delete=models.PROTECT, related_name='sharerID', null=True)
+        User, blank=True, on_delete=models.SET_NULL, related_name='sharerID', null=True)
     sharerPartySize = models.PositiveIntegerField(blank=True, default=1)
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Order(models.Model):  # Order = ride request
 
 class Driver(models.Model):
     # driverID = id
-    userID = models.ForeignKey(User, on_delete=models.CASCADE)
+    userID = models.OneToOneField(User, on_delete=models.CASCADE)
     vehicleType = models.CharField(max_length=100)
     licensePlateNumber = models.CharField(max_length=10)
     seatCapacity = models.PositiveIntegerField()
