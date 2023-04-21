@@ -1,0 +1,9 @@
+{% extends 'rider/base.html' %}
+{% block content %}
+<p>You are not a driver yet, become a driver now!</p>
+<form method="post" action="/driver/">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Register!">
+</form>
+{% endblock %}

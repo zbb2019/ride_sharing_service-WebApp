@@ -1,0 +1,11 @@
+<!-- user registration using django builtin auth -->
+{% extends 'rider/base.html' %}
+{% block content %}
+<h1>Create an Account</h1>
+<form method="post" action="/create_account/">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create!">
+</form>
+<p>Already have an account? <a href="/login/">Log in!</a></p>
+{% endblock %}

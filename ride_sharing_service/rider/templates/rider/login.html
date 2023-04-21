@@ -1,0 +1,18 @@
+<!-- this is a login page using django auth -->
+{% extends 'rider/base.html' %}
+{% block content %}
+
+<h1>login</h1>
+<form action="/login/" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login">
+</form>
+<p>Don't have an account? <a href="/create_account/">Create one!</a></p>
+
+{% if form.errors %}
+<p>!!! Invalid account information!<br>
+    !!! Please try again.</p>
+{% endif %}
+
+{% endblock %}

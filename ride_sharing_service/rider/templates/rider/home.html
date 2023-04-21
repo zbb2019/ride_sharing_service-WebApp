@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title></title>
-</head>
-
-<body>
-    <h1>Rider-home!</h1>
-</body>
-
-</html>
+<!-- Main user page (rider viewing and requesting). -->
+{% extends 'rider/base.html' %}
+{% block content %}
+<legend class="border-bottom mb-4">List of Open Rides</legend>
+<article class="media content-section">
+    <div class="media-body">
+        <table class="table table-striped table-hover table-responsive">
+            <tr>
+                <th>Vehicle Type</th>
+                <th>License Plate Number</th>
+                <th>Seat Capacity</th>
+                <th>Special Info</th>
+            </tr>
+            <tr>
+                <td>{{ driver.vehicleType }}</td>
+                <td>{{ driver.licensePlateNumber }}</td>
+                <td>{{ driver.seatCapacity }}</td>
+                <td>{{ driver.specialInfo }}</td>
+            </tr>
+        </table>
+    </div>
+</article>
+{% endblock %}
