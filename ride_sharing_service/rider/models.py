@@ -32,6 +32,7 @@ class Order(models.Model):  # Order = ride request
         User, blank=True, on_delete=models.SET_NULL, related_name='sharerID', null=True)
     sharerPartySize = models.PositiveIntegerField(blank=True, default=1)
 
+    totalPartySize = models.PositiveIntegerField(default=1)
     def __str__(self):
         return 'order #' + str(self.id)
 

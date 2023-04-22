@@ -7,37 +7,101 @@
         <table class="table table-striped table-hover table-responsive">
             <tr>
                 <th>Vehicle Type</th>
-                <th>License Plate Number</th>
-                <th>Seat Capacity</th>
-                <th>Special Info</th>
+                <td>{{ driver.vehicleType }}</td>
             </tr>
             <tr>
-                <td>{{ driver.vehicleType }}</td>
+                <th>License Plate Number</th>
                 <td>{{ driver.licensePlateNumber }}</td>
+            </tr>
+            <tr>
+                <th>Seat Capacity</th>
                 <td>{{ driver.seatCapacity }}</td>
+            </tr>
+            <tr>
+                <th>Special Info</th>
                 <td>{{ driver.specialInfo }}</td>
             </tr>
         </table>
     </div>
 </article>
 
-<legend class="border-bottom mb-4">Driver Profile</legend>
+<legend class="border-bottom mb-4">Start a Drive</legend>
 <article class="media content-section">
     <div class="media-body">
-        <table class="table table-striped table-hover table-responsive">
-            <tr>
-                <th>Vehicle Type</th>
-                <th>License Plate Number</th>
-                <th>Seat Capacity</th>
-                <th>Special Info</th>
-            </tr>
-            <tr>
-                <td>{{ driver.vehicleType }}</td>
-                <td>{{ driver.licensePlateNumber }}</td>
-                <td>{{ driver.seatCapacity }}</td>
-                <td>{{ driver.specialInfo }}</td>
-            </tr>
-        </table>
+        <form method="get">
+            <input type="hidden" name="open_rides" value="true">
+            <button type="submit" class="btn btn-primary">
+                Search!
+            </button>
+        </form>
+        {% if open_rides is not None %}
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Arrival Time</th>
+                        <th>Accept Drive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ride in open_rides %}
+                        <tr>
+                            <td>{{ ride.destAddr }}</td>
+                            <td>{{ ride.reqArrvDateTime }}</td>
+                            <td>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="accept_ride" value="{{ ride.id }}">
+                                    <button type="submit" class="btn btn-primary">
+                                        Accept Drive
+                                    </button>
+                                </form>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">No open rides</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</article>
+
+<legend class="border-bottom mb-4">Ongoing Drives</legend>
+<article class="media content-section">
+    <div class="media-body">
+        {% if ongoing_rides is not None %}
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Destination</th>
+                        <th>Arrival Time</th>
+                        <th>Finish Drive</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ride in ongoing_rides %}
+                        <tr>
+                            <td>{{ ride.destAddr }}</td>
+                            <td>{{ ride.reqArrvDateTime }}</td>
+                            <td>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="finish_ride" value="{{ ride.id }}">
+                                    <button type="submit" class="btn btn-primary">
+                                        Finish Drive
+                                    </button>
+                                </form>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="2">No ongoing rides</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 </article>
 {% endblock %}
