@@ -29,7 +29,7 @@
 <article class="media content-section">
     <div class="media-body">
         <form method="get">
-            <input type="hidden" name="open_rides" value="true">
+            <input type="hidden" name="showresults" value="true">
             <button type="submit" class="btn btn-primary">
                 Search!
             </button>
@@ -41,6 +41,7 @@
                         <th>Destination</th>
                         <th>Arrival Time</th>
                         <th>Accept Drive</th>
+                        <th>View Detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,10 +57,19 @@
                                         Accept Drive
                                     </button>
                                 </form>
+                            </td>
+                            <td>
+                                <form method="get" action="/ride_details">
+                                    <input type="hidden" name="rideid" value="{{ ride.id }}">
+                                    <button type="submit" class="btn btn-primary">
+                                        View Detail
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="2">No open rides</td>
+                            <td colspan="4">No open rides</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -78,6 +88,7 @@
                         <th>Destination</th>
                         <th>Arrival Time</th>
                         <th>Finish Drive</th>
+                        <th>View Detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,10 +104,19 @@
                                         Finish Drive
                                     </button>
                                 </form>
+                            </td>
+                            <td>
+                                <form method="get" action="/ride_details">
+                                    <input type="hidden" name="rideid" value="{{ ride.id }}">
+                                    <button type="submit" class="btn btn-primary">
+                                        View Detail
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="2">No ongoing rides</td>
+                            <td colspan="4">No ongoing rides</td>
                         </tr>
                     {% endfor %}
                 </tbody>

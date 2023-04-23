@@ -1,0 +1,63 @@
+{% extends 'rider/base.html' %}
+{% block content %}
+<legend class="border-bottom mb-4">Join a Ride</legend>
+<article class="media content-section">
+    <div class="media-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Search!">
+        </form>
+    </div>
+</article>
+{% if open_rides is not None %}
+<legend class="border-bottom mb-4">Available Rides</legend>
+<article class="media content-section">
+    <div class="media-body">
+        <table class="table table-striped table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Arrival Time</th>
+                    <th>Your Party Size</th>
+                    <th>Join Ride</th>
+                    <th>View Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ride in open_rides %}
+                    <tr>
+                        <td>{{ ride.destAddr }}</td>
+                        <td>{{ ride.reqArrvDateTime }}</td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="ride_id" value="{{ ride.id }}">
+                            <td>
+                                <input type="number" name="party_size" min="1" value="1">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-primary">
+                                    Join!
+                                </button>
+                            </td>
+                            <td>
+                                <form method="get" action="/ride_details">
+                                    <input type="hidden" name="rideid" value="{{ ride.id }}">
+                                    <button type="submit" class="btn btn-primary">
+                                        View Detail
+                                    </button>
+                                </form>
+                            </td>
+                        </form>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No open rides</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</article>
+{% endif %}
+{% endblock %}

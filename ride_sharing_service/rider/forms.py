@@ -22,18 +22,13 @@ class OwnerOrderForm(forms.ModelForm):
                   'ownerPartySize', 'vehicleType', 'specialRequest')
         labels = {'sharableTF': 'Sharable or Not',
                   'destAddr': 'Destination Address',
-                  'reqArrvDateTime': 'Requested Arrival Date and Time',
+                  'reqArrvDateTime': 'Requested Arrival Date and Time(yyyy-mm-dd hh:mm:ss)',
                   'ownerPartySize': 'Your Party Size',
                   'vehicleType': 'Vehicle Type',
                   'specialRequest': 'Any Special Requests (optional)'}
 
 
-class SharerSearchForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = ('destAddr', 'reqArrvDateTime', 'reqArrvDateTime',
-                  'ownerPartySize')
-        labels = {'destAddr': 'Destination Address',
-                  'reqArrvDateTime': 'Earliest Required Arrival Date and Time',
-                  'reqArrvDateTime': 'Latest Required Arrival Date and Time',
-                  'ownerPartySize': 'Your Party Size'}
+class SharerSearchForm(forms.Form):
+    destAddr = forms.CharField(label='Destination Address')
+    reqArrvDateTimeEarly = forms.DateTimeField(label='Earliest Requested Arrival Date and Time(yyyy-mm-dd hh:mm:ss)')
+    reqArrvDateTimeLate = forms.DateTimeField(label='Latest Requested Arrival Date and Time(yyyy-mm-dd hh:mm:ss)')
