@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.safestring import mark_safe
 from .models import Driver, Order
 
 
@@ -22,7 +23,7 @@ class OwnerOrderForm(forms.ModelForm):
                   'ownerPartySize', 'vehicleType', 'specialRequest')
         labels = {'sharableTF': 'Sharable or Not',
                   'destAddr': 'Destination Address',
-                  'reqArrvDateTime': 'Requested Arrival Date and Time(yyyy-mm-dd hh:mm:ss)',
+                  'reqArrvDateTime': mark_safe('Requested Arrival Date and Time<br><small>(e.g., yyyy-mm-dd hh:mm:ss)</small>'),
                   'ownerPartySize': 'Your Party Size',
                   'vehicleType': 'Vehicle Type',
                   'specialRequest': 'Any Special Requests (optional)'}
@@ -30,5 +31,9 @@ class OwnerOrderForm(forms.ModelForm):
 
 class SharerSearchForm(forms.Form):
     destAddr = forms.CharField(label='Destination Address')
-    reqArrvDateTimeEarly = forms.DateTimeField(label='Earliest Requested Arrival Date and Time(yyyy-mm-dd hh:mm:ss)')
-    reqArrvDateTimeLate = forms.DateTimeField(label='Latest Requested Arrival Date and Time(yyyy-mm-dd hh:mm:ss)')
+    reqArrvDateTimeEarly = forms.DateTimeField(
+        label=mark_safe('Earliest Requested Arrival Date and Time<br><small>(e.g., yyyy-mm-dd hh:mm:ss)</small>'))
+    reqArrvDateTimeLate = forms.DateTimeField(
+        label=mark_safe('Latest Requested Arrival Date and Time<br><small>(e.g., yyyy-mm-dd hh:mm:ss)</small>'))
+    sharerPartySize = forms.IntegerField(
+        label='Sharer Party Size', min_value=1)

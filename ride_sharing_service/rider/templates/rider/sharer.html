@@ -29,26 +29,25 @@
                     <tr>
                         <td>{{ ride.destAddr }}</td>
                         <td>{{ ride.reqArrvDateTime }}</td>
+                        <td>{{ party_size }}</td>
                         <form method="post">
                             {% csrf_token %}
                             <input type="hidden" name="ride_id" value="{{ ride.id }}">
-                            <td>
-                                <input type="number" name="party_size" min="1" value="1">
-                            </td>
+                            <input type="hidden" name="party_size" value="{{ party_size }}">
                             <td>
                                 <button type="submit" class="btn btn-primary">
                                     Join!
                                 </button>
                             </td>
-                            <td>
-                                <form method="get" action="/ride_details">
-                                    <input type="hidden" name="rideid" value="{{ ride.id }}">
-                                    <button type="submit" class="btn btn-primary">
-                                        View Detail
-                                    </button>
-                                </form>
-                            </td>
                         </form>
+                        <td>
+                            <form method="get" action="/ride_details">
+                                <input type="hidden" name="rideid" value="{{ ride.id }}">
+                                <button type="submit" class="btn btn-primary">
+                                    View Detail
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                 {% empty %}
                     <tr>

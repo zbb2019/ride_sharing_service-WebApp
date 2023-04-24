@@ -1,7 +1,7 @@
 {% extends 'rider/base.html' %}
 {% block content %}
 <!-- show driver profile in a table -->
-<legend class="border-bottom mb-4">Driver Profile</legend>
+<legend class="border-bottom mb-4">Your Driver Profile</legend>
 <article class="media content-section">
     <div class="media-body">
         <table class="table table-striped table-hover table-responsive">
@@ -31,49 +31,51 @@
         <form method="get">
             <input type="hidden" name="showresults" value="true">
             <button type="submit" class="btn btn-primary">
-                Search!
+                Search for Rides to Drive ~
             </button>
         </form>
         {% if open_rides is not None %}
-            <table class="table table-striped table-hover table-responsive">
-                <thead>
-                    <tr>
-                        <th>Destination</th>
-                        <th>Arrival Time</th>
-                        <th>Accept Drive</th>
-                        <th>View Detail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ride in open_rides %}
-                        <tr>
-                            <td>{{ ride.destAddr }}</td>
-                            <td>{{ ride.reqArrvDateTime }}</td>
-                            <td>
-                                <form method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="accept_ride" value="{{ ride.id }}">
-                                    <button type="submit" class="btn btn-primary">
-                                        Accept Drive
-                                    </button>
-                                </form>
-                            </td>
-                            <td>
-                                <form method="get" action="/ride_details">
-                                    <input type="hidden" name="rideid" value="{{ ride.id }}">
-                                    <button type="submit" class="btn btn-primary">
-                                        View Detail
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4">No open rides</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <table class="table table-striped table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Arrival Time</th>
+                    <th># of Passengers</th>
+                    <th>Accept Drive</th>
+                    <th>View Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ride in open_rides %}
+                <tr>
+                    <td>{{ ride.destAddr }}</td>
+                    <td>{{ ride.reqArrvDateTime }}</td>
+                    <td>{{ ride.totalPartySize }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="accept_ride" value="{{ ride.id }}">
+                            <button type="submit" class="btn btn-primary">
+                                Accept Drive
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="get" action="/ride_details">
+                            <input type="hidden" name="rideid" value="{{ ride.id }}">
+                            <button type="submit" class="btn btn-primary">
+                                View Detail
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No open rides</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% endif %}
     </div>
 </article>
@@ -82,45 +84,47 @@
 <article class="media content-section">
     <div class="media-body">
         {% if ongoing_rides is not None %}
-            <table class="table table-striped table-hover table-responsive">
-                <thead>
-                    <tr>
-                        <th>Destination</th>
-                        <th>Arrival Time</th>
-                        <th>Finish Drive</th>
-                        <th>View Detail</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for ride in ongoing_rides %}
-                        <tr>
-                            <td>{{ ride.destAddr }}</td>
-                            <td>{{ ride.reqArrvDateTime }}</td>
-                            <td>
-                                <form method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="finish_ride" value="{{ ride.id }}">
-                                    <button type="submit" class="btn btn-primary">
-                                        Finish Drive
-                                    </button>
-                                </form>
-                            </td>
-                            <td>
-                                <form method="get" action="/ride_details">
-                                    <input type="hidden" name="rideid" value="{{ ride.id }}">
-                                    <button type="submit" class="btn btn-primary">
-                                        View Detail
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% empty %}
-                        <tr>
-                            <td colspan="4">No ongoing rides</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <table class="table table-striped table-hover table-responsive">
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Arrival Time</th>
+                    <th># of Passengers</th>
+                    <th>Finish Drive</th>
+                    <th>View Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ride in ongoing_rides %}
+                <tr>
+                    <td>{{ ride.destAddr }}</td>
+                    <td>{{ ride.reqArrvDateTime }}</td>
+                    <td>{{ ride.totalPartySize }}</td>
+                    <td>
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="finish_ride" value="{{ ride.id }}">
+                            <button type="submit" class="btn btn-primary">
+                                Finish Drive
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form method="get" action="/ride_details">
+                            <input type="hidden" name="rideid" value="{{ ride.id }}">
+                            <button type="submit" class="btn btn-primary">
+                                View Detail
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No ongoing rides</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% endif %}
     </div>
 </article>
