@@ -1,0 +1,7 @@
+List to Fix
+
+1. In models.py, when I try to update the relationship between User and Driver to "One-to-One", it raised a bug in the database. It's probably due to that I used 1 user to create 2 drivers during testing, but forgot to delete the 2nd driver afterwards. 
+2. User login is not required to access the site. 
+3. After logging-in, user can still use url "/login" to access the login page.
+4. After logging-in, user can still use url "/register" to access the register page.
+5. In the driver page, after the driver clickes "complete" a ride, the reloaded page will display open rides, although "search for open rides" wasn't clicked.
