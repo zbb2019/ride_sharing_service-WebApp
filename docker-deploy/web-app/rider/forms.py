@@ -6,12 +6,13 @@ from .models import Driver, Order
 class DriverRegistrationForm(forms.ModelForm):
     class Meta:
         model = Driver
-        fields = ('vehicleType', 'licensePlateNumber',
+        fields = ('name', 'vehicleType', 'licensePlateNumber',
                   'seatCapacity', 'specialVehicleInfo')
         labels = {
+            'name': 'Your Name',
             'vehicleType': 'Vehicle Type',
             'licensePlateNumber': 'License Plate Number',
-            'seatCapacity': 'Seat Capacity',
+            'seatCapacity': mark_safe('Seat Capacity<br><small>(must be >= 1)</small>'),
             'specialVehicleInfo': 'Any Special Vehicle Info (optional)'
         }
 
@@ -25,7 +26,7 @@ class OwnerOrderForm(forms.ModelForm):
                   'destAddr': 'Destination Address',
                   'reqArrvDateTime': mark_safe('Requested Arrival Date and Time<br><small>(e.g., yyyy-mm-dd hh:mm:ss)</small>'),
                   'ownerPartySize': 'Your Party Size',
-                  'vehicleType': 'Vehicle Type',
+                  'vehicleType': 'Vehicle Type (optional)',
                   'specialRequest': 'Any Special Requests (optional)'}
 
 

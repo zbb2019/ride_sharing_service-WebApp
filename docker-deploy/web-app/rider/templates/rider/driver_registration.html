@@ -1,6 +1,6 @@
 {% extends 'rider/base.html' %}
 {% block content %}
-<p>You are not a driver yet, become a driver now!</p>
+<legend class="border-bottom mb-4">You are not a driver yet, register as a driver now!</legend>
 <form method="post" action="/driver/">
     {% csrf_token %}
     {{ form.as_p }}

@@ -1,35 +1,25 @@
 {% extends 'rider/base.html' %}
 {% block content %}
 <legend class="border-bottom mb-4">Rider Details</legend>
-<p>
-    {% if role is None %}
-        You are not involved in this ride.
-    {% else %}
-        You are the {{ role }} of this ride.
-    {% endif %}
-</p>
+
 <article class="media content-section">
     <div class="media-body">
         <table class="table table-striped table-hover table-responsive">
+            <tr>
+                <th>Your Role in this Ride</th>
+                <td>{{ role }}</td>
+            </tr>
             <tr>
                 <th>Ride Status</th>
                 <td>{{ ride.get_status_display }}</td>
             </tr>
             <tr>
-                <th>Destination</th>
+                <th>Destination Address</th>
                 <td>{{ ride.destAddr }}</td>
             </tr>
             <tr>
-                <th>Arrival Time</th>
+                <th>Request Arrival Date & Time</th>
                 <td>{{ ride.reqArrvDateTime }}</td>
-            </tr>
-            <tr>
-                <th>Special Request</th>
-                <td>{{ ride.specialRequest }}</td>
-            </tr>
-            <tr>
-                <th>Vehicle Type</th>
-                <td>{{ ride.vehicleType }}</td>
             </tr>
             <tr>
                 <th>Owner Party Size</th>
@@ -39,14 +29,47 @@
                 <th>Sharable?</th>
                 <td>{{ ride.sharableTF }}</td>
             </tr>
-            {% if ride.sharerID %}
-                <tr>
-                    <th>Sharer Party Size</th>
-                    <td>{{ ride.sharerPartySize }}</td>
-                </tr>
+            {% if ride.sharableTF %}
+            <tr>
+                <th>Sharer Party Size</th>
+                <td>{{ ride.sharerPartySize }}</td>
+            </tr>
             {% endif %}
+            <tr>
+                <th>Requested Vehicle Type<br><small>(Optional) </small></th>
+                <td>{{ ride.vehicleType }}</td>
+            </tr>
+            <tr>
+                <th>Special Request<br><small>(Optional)</small></th>
+                <td>{{ ride.specialRequest }}</td>
+            </tr>
         </table>
-        <button onclick="history.back()"  class="btn btn-primary">Go Back</button>
+        {% if driver %}
+        <legend class="border-bottom mb-4">Driver & Vehicle Details</legend>
+        <table class="table table-striped table-hover table-responsive">
+            <tr>
+                <th>Driver Name</th>
+                <td>{{ driver.name }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Type</th>
+                <td>{{ driver.vehicleType }}</td>
+            </tr>
+            <tr>
+                <th>Plate Number</th>
+                <td>{{ driver.licensePlateNumber }}</td>
+            </tr>
+            <tr>
+                <th>Capacity</th>
+                <td>{{ driver.seatCapacity }}</td>
+            </tr>
+            <tr>
+                <th>Special Info<br><small>(Optional)</small></th>
+                <td>{{ driver.specialVehicleInfo }}</td>
+            </tr>
+        </table>
+        {% endif %}
+        <button onclick="history.back()" class="btn btn-primary">Go Back</button>
     </div>
 </article>
 {% endblock %}

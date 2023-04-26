@@ -62,7 +62,11 @@ def driver(request):
                 driver = form.save(commit=False)
                 driver.userID = request.user
                 driver.save()
+                messages.success(
+                    request, f'Driver registered successfully!')
                 return redirect('rider-driver')
+            messages.warning(
+                request, f'Driver registration failed!')
         form = DriverRegistrationForm()
         return render(request, 'rider/driver_registration.html', {'form': form})
     else:
@@ -126,6 +130,7 @@ def ride_details(request):
         ride = Order.objects.get(id=rideid) if rideid else None
         if not ride:
             return redirect('rider-home')
+        driver = ride.driverID
         role = None
         if ride.driverID == request.user:
             role = 'driver'
@@ -133,7 +138,7 @@ def ride_details(request):
             role = 'owner'
         elif ride.sharerID == request.user:
             role = 'sharer'
-        return render(request, 'rider/ride_details.html', {'ride': ride, 'role': role})
+        return render(request, 'rider/ride_details.html', {'ride': ride, 'role': role, 'driver': driver})
 
 
 @login_required
