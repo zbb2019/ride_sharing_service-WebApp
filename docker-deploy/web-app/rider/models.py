@@ -32,7 +32,7 @@ class Order(models.Model):  # Order = ride request
         'Driver', blank=True, on_delete=models.SET_NULL, related_name='driver', null=True)
     sharerID = models.ForeignKey(
         User, blank=True, on_delete=models.SET_NULL, related_name='sharerID', null=True)
-    sharerPartySize = models.PositiveIntegerField(blank=True, default=1)
+    sharerPartySize = models.PositiveIntegerField(blank=True, default=0)
 
     totalPartySize = models.PositiveIntegerField()
 
